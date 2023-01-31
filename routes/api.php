@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ClientController;
 use App\Http\Controllers\Api\StudentController;
+use App\Http\Controllers\CourseController;
 use App\Models\course;
 
 /*
@@ -21,18 +22,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-
-Route::get("/user",function(){
+Route::get("/user", function () {
     return "jkjjkj";
 });
-Route::post("/user",function(){
+Route::post("/user", function () {
 
-$course=course::find(1);
-
-return response()->json($course->name,401);
-
+    $course = course::find(1);
+    return response()->json($course->name, 401);
 });
-Route::post("client/store",[ClientController::class,"store"]);
-
-Route::post("student/store/{id}",[StudentController::class,"index"]);
+Route::post("client/store", [ClientController::class, "store"]);
+Route::post("student/store/{id}", [StudentController::class, "index"]);
+Route::get("course/show/{id}", function ($id){
+    die("sadasds".$id);
+});

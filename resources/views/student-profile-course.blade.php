@@ -19,7 +19,7 @@
                 </div>
                         <br>
 
-                   <table class="table table-bordered table-striped">
+                   <table id="myTable" class="table table-bordered table-striped">
 
                     <thead>
                         <tr>
@@ -39,7 +39,7 @@
                     </thead>
 <tbody>
 
-@foreach($user_course as $c)
+@foreach($user_course_paid as $c)
 @php
 
 $paid=0;
@@ -56,22 +56,14 @@ $paid=0;
         </td>
         <td> {{price($c->final_fees)}} </td>
 
-        <td> @foreach($c->getFees as $cf)
-                   @php
-                     $paid+=$cf->amount;
-                   @endphp
+        <td> 
 
-                @endforeach
-
-
-               <a  style="text-decoration:none" href="{{route('student-profile-transaction')}}">   {{price($paid)}}<a/>
+               <a  style="text-decoration:none" href="{{route('student-profile-transaction')}}">   {{$c->paid_fees}}<a/>
 
         </td>
         <td>
-            @php
-              $due_fees=$c->final_fees-$paid;
-              echo price($due_fees);
-            @endphp
+          {{$c->final_fees-$c->paid_fees}}
+            
         </td>
 
 

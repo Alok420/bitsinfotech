@@ -14,7 +14,7 @@
 
 
 
-                   <table border="2" cellspacing="0" cellpadding="4">
+                   <table id="myTable" border="2" cellspacing="0" cellpadding="4">
 
                     <thead>
                         <tr>
