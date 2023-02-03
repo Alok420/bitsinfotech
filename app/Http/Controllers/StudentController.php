@@ -191,6 +191,7 @@ class StudentController extends Controller
     
         $basename = $this->getBase();
         $course = course::all();
+
         $nav = $this->getNav();
         $data = compact("student", "basename", "nav", "course");
 

@@ -56,7 +56,13 @@ class StudentProfileController extends Controller
 
         return view("student-profile")->with($data);
     }
+    public function invoice($id)
+    {
 
+        $transaction = student_fees::where("id", $id)->get();
+        $data=compact('transaction');
+        return view("invoice.invoice")->with($data);
+    }
     public function course()
     {
 
@@ -66,13 +72,13 @@ class StudentProfileController extends Controller
         $student_id = Auth::user()->getStudent->id;
 
         $user_course = user_course::where('student_id', $student_id)->get();
-        $user_course_paid=array();
-        foreach($user_course as $course){
+        $user_course_paid = array();
+        foreach ($user_course as $course) {
             $student_fees = student_fees::where('student_id', $student_id)->sum("amount");
-            $course["paid_fees"]=$student_fees;
-            array_push($user_course_paid,$course);
+            $course["paid_fees"] = $student_fees;
+            array_push($user_course_paid, $course);
         }
-      
+
         $data = compact("user_course_paid", "nav", "basename");
         return view("student-profile-course")->with($data);
     }
@@ -272,7 +278,7 @@ class StudentProfileController extends Controller
 
     public function transaction()
     {
-        $transaction = student_fees::where("student_id",Auth::user()->getStudent->id)->get();
+        $transaction = student_fees::where("student_id", Auth::user()->getStudent->id)->get();
 
         $nav = $this->getNav();
         $basename = $this->getBase();

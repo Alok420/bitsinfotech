@@ -17,28 +17,17 @@
                         @endif
 
                         <div class="row">
-
                         </div>
                         <br>
-
                         <table id="myTable" class="table table-bordered table-striped">
-
                             <thead>
                                 <tr>
-
                                     <th>Id</th>
                                     <th>Course Name</th>
-
-
                                     <th>Amount Paid</th>
                                     <th>Payment Method</th>
                                     <th>Payment date</th>
-
-
-
-
-
-
+                                    <th>Invoice</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -60,6 +49,9 @@
                                             </td>
                                             <td>
                                                 {{ my_format_date($t->date) }}
+                                            </td>
+                                            <td>
+                                                <a href="{{route('student-invoice',['id'=>$t->id ]) }}" class="btn btn-success">Invoice</a>
                                             </td>
                                         </tr>
                                     @endisset

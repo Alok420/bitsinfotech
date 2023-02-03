@@ -31,7 +31,6 @@ Route::get("/home", function () {
     if (Auth::user()->role == 1) {
         return redirect("dashboard/home");
     } else {
-
         return redirect("student-dashboard/profile");
     }
 });
@@ -40,17 +39,14 @@ Auth::routes();
 
 
 Route::group(['middleware' => 'auth'], function () {
-
     Route::group(['middleware' => 'profile'], function () {
-
-
-
 
         Route::get('/dashboard/home', [HomeController::class, 'index'])->name('dashboard')->middleware('admin');
 
         Route::get("/student-dashboard/profile", [StudentProfileController::class, 'index'])->name("student-profile")->middleware('profile');
 
         Route::get("/student-profile-course/course", [StudentProfileController::class, 'course'])->name("student-profile-course");
+        Route::get("/student-invoice/invoice/{id}", [StudentProfileController::class, 'invoice'])->name("student-invoice");
 
         Route::get("/quiz/student-profile-quiz", [StudentProfileController::class, 'quiz'])->name("student-profile-quiz");
 
@@ -69,8 +65,6 @@ Route::group(['middleware' => 'auth'], function () {
 
 
         Route::group(['middleware' => 'admin'], function () {
-
-
             Route::group(['prefix' => 'student'], function () {
                 Route::get('/add-form', [App\Http\Controllers\StudentController::class, 'index'])->name('student-form');
                 Route::get('/edit-form/{id}', [App\Http\Controllers\StudentController::class, 'index'])->name('student-edit-form');

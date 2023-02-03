@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\course;
 use App\Models\subject;
 use App\Models\course_subject;
+use App\Models\student;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -17,8 +18,7 @@ class CourseController extends Controller
 
     public function __construct()
     {
-
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => ['getCoursesByStudent']]);
     }
 
     function getNav()
@@ -173,8 +173,17 @@ class CourseController extends Controller
     }
     public function getCoursesByStudent($id)
     {
-        $course = course::all();
 
+        $course = student::where("id", $id)->get();
+        if (count($course) > 0) {
+            $courses = $course[0]->getCourse;
+            $course = array();
+            for ($i = 0; $i < count($courses); $i++) {
+                array_push($course, $courses[$i]->getCourse);
+            }
+            return response()->json($course, 200);
+        } else
+            $course = array();
         return response()->json($course, 200);
     }
     /**
