@@ -21,7 +21,7 @@
                         </div>
                         <br>
 
-                        <table id="myTable" class="table table-bordered table-striped">
+                        <table id="myTable" class="table table-bordered table-striped" style="text-align:left;">
 
                             <thead>
                                 <tr>
@@ -53,9 +53,11 @@
                                         <td>{{ $c->id }}</td>
                                         <td>{{ $c->getCourse->name }}</td>
                                         <td>
+                                            <ul class="list-group list-group-flush">
                                             @foreach ($c->getCourse->get_Course_Subject as $s)
-                                                <li> {{ $s->getSubject->name }} </li>
+                                                <li class="list-group-item text-left p-1 list-group-flush m-1"> {{ $s->getSubject->name }} </li>
                                             @endforeach
+                                            </ul>
                                         </td>
                                         <td> {{ price($c->final_fees) }} </td>
 

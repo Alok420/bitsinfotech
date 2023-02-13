@@ -39,7 +39,7 @@
                                 <script>
                                     function getMyCourse(thisdata) {
                                         var id = $(thisdata).val();
-                                        $.get("/api/course/show/" + id, function(data, status) {
+                                        $.get("../api/course/show/" + id, function(data, status) {
                                           for (let index = 0; index < data.length; index++) {
                                             const element = data[index];
                                             var id=element.id;

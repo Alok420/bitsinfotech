@@ -29,7 +29,7 @@ class StudentProfile
                 return $next($request);
             } else {
                 Auth::logout();
-                return view('home');
+                return response()->view('home');
             }
         } else {
 
