@@ -5,7 +5,18 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">   <h2 align="center">{{ $heading }}</h2></div>
+                    <div class="card-header">
+                        @if (empty($heading))
+                            <h1>{{ 'Account Created successfully, Contact to admin ' }}</h1>
+
+                            @php
+                                die();
+                            @endphp
+                        @else
+                            <p>Your data is here!</p>
+                        @endif
+                        <h2 align="center">{{ $heading }}</h2>
+                    </div>
 
                     <div class="card-body">
                         @if (session('status'))
@@ -64,7 +75,8 @@
                                     <select name="course" id="course" class="form-control">
                                         <option value="">--select--</option>
                                         @foreach ($course as $c)
-                                            <option @if(@$client->course_id==$c->id) selected @endif value="{{ $c->id }}">{{ $c->name }}</option>
+                                            <option @if (@$client->course_id == $c->id) selected @endif
+                                                value="{{ $c->id }}">{{ $c->name }}</option>
                                         @endforeach
 
                                     </select>
@@ -100,7 +112,8 @@
                                     <select name="city" id="city" class="form-control">
                                         <option value="">--select--</option>
                                         @foreach ($city as $ci)
-                                            <option @if(@$client->city_id==$ci->id) selected @endif value="{{ $ci->id }}">{{ $ci->name }}</option>
+                                            <option @if (@$client->city_id == $ci->id) selected @endif
+                                                value="{{ $ci->id }}">{{ $ci->name }}</option>
                                         @endforeach
 
                                     </select>
@@ -118,7 +131,8 @@
                                     <select name="batch" id="batch" class="form-control">
                                         <option value="">--select--</option>
                                         @foreach ($batch as $b)
-                                            <option @if(@$client->batch_id==$b->id) selected @endif value="{{ $b->id }}">{{ $b->shift }}</option>
+                                            <option @if (@$client->batch_id == $b->id) selected @endif
+                                                value="{{ $b->id }}">{{ $b->shift }}</option>
                                         @endforeach
 
                                     </select>
@@ -132,7 +146,7 @@
 
                             </div>
 
-                            <div class="row mt-3" >
+                            <div class="row mt-3">
 
                                 <div class="form-group col-md-5 offset-1">
                                     <label>Gender</label>&nbsp;&nbsp;&nbsp;
@@ -158,22 +172,25 @@
 
 
 
-                                      @php
-                                         if(@$client->hobbies){
-                                          $hobbies=explode(",",$client->hobbies);
-                                         }else{
-                                            $hobbies=[];
-                                         }
-                                      @endphp
-                                             <input  @if (in_array("Indoor",$hobbies)) checked @endif type="checkbox" value="Indoor" name="hobby[]" >
+                                            @php
+                                                if (@$client->hobbies) {
+                                                    $hobbies = explode(',', $client->hobbies);
+                                                } else {
+                                                    $hobbies = [];
+                                                }
+                                            @endphp
+                                            <input @if (in_array('Indoor', $hobbies)) checked @endif type="checkbox"
+                                                value="Indoor" name="hobby[]">
                                         </div>
                                         <div class="col-md-4">
                                             <i>Outdoor Games</i>&nbsp;
-                                            <input  @if (in_array("Outdoor",$hobbies)) checked @endif type="checkbox" value="Outdoor" name="hobby[]" >
+                                            <input @if (in_array('Outdoor', $hobbies)) checked @endif type="checkbox"
+                                                value="Outdoor" name="hobby[]">
                                         </div>
                                         <div class="col-md-3">
                                             <i>Other</i>&nbsp;
-                                            <input @if (in_array("Other",$hobbies)) checked @endif type="checkbox" value="Other" name="hobby[]" >
+                                            <input @if (in_array('Other', $hobbies)) checked @endif type="checkbox"
+                                                value="Other" name="hobby[]">
                                         </div>
                                         <span class="text-danger">
                                             @error('hobby')
@@ -199,24 +216,26 @@
             $("#course").change(function() {
 
                 var a = $("#course").val();
-                if(a){
-                $.ajax({
-                    url: "{{url('getfees')}}",
-                    type: "get",
-                    data: {id:a},
-                    dataType:"JSON",
-                    success:function(data){
-                             $("#course-italic").html(data);
-                    }
+                if (a) {
+                    $.ajax({
+                        url: "{{ url('getfees') }}",
+                        type: "get",
+                        data: {
+                            id: a
+                        },
+                        dataType: "JSON",
+                        success: function(data) {
+                            $("#course-italic").html(data);
+                        }
 
 
 
-                });
-            }else{
+                    });
+                } else {
 
-                $("#course-italic").html("");
+                    $("#course-italic").html("");
 
-            }
+                }
             })
 
         })
